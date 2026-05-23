@@ -1,0 +1,140 @@
+================================================================================
+CONTRACTIQ (ai-contract) — PROJECT OVERVIEW
+Generated from repository analysis (frontend + backend).
+================================================================================
+
+1. NAME & WHAT IT DOES
+--------------------------------------------------------------------------------
+Product name (UI/branding): ContractIQ
+Backend package name: contractiq-backend
+
+ContractIQ is a multi-tenant SaaS application for AI-assisted legal contract
+review. Users upload contracts (PDF or DOCX), typically up to large documents
+(~200 pages as marketed on the landing page). The system:
+
+  • Extracts text from uploaded files (including OCR-related tooling for
+    difficult PDFs where applicable).
+  • Classifies contract type (NDA, service agreement, employment, etc.) when
+    unknown.
+  • Runs structured AI analysis to produce risk scores, severity-ranked clause
+    flags, missing-clause detection, positives, negotiation priorities,
+    jurisdiction notes, and executive summaries.
+  • Generates professional PDF redlines with suggested replacement language.
+  • Tracks analyses per organization with subscription tiers and usage limits.
+
+The web app provides authentication, a dashboard for contracts and drill-down
+analysis views, pricing/checkout flows, and settings. The API supports API keys,
+webhooks (HMAC-signed payloads), audit logging, and Stripe billing.
+
+--------------------------------------------------------------------------------
+
+2. MOTIVE
+--------------------------------------------------------------------------------
+The product is motivated by reducing repetitive manual contract review work for
+legal professionals while preserving a structured, attorney-oriented workflow:
+surface risks quickly, explain issues in plain language with citations, and
+produce negotiation-ready redlines instead of only generic chat answers.
+
+Organization-level isolation, audit trails, and webhook/API integrations signal
+intent to serve both individual practitioners and firms or platforms that need
+to embed contract intelligence into their own products.
+
+--------------------------------------------------------------------------------
+
+3. PROBLEM SOLING (WHAT PROBLEMS IT ADDRESSES)
+--------------------------------------------------------------------------------
+  • Time cost: Manual first-pass review of long agreements is slow; the product
+    aims to compress initial review into roughly a minute-scale turnaround for
+    typical workloads (marketing claims ~60s analysis time).
+
+  • Inconsistent checklist coverage: The backend encodes contract-type-specific
+    legal frameworks (mandatory clauses, high-risk patterns, jurisdiction notes)
+    so analysis is systematic rather than ad hoc.
+
+  • Negotiation friction: Flags include actionable recommendations and suggested
+    replacement text; redline PDF export supports sending edits to counterparties.
+
+  • Operational integration: REST API, API keys, rate limits, and webhooks
+    address firms and platforms that need programmatic triggers when analyses
+    complete or fail.
+
+  • Trust & compliance-oriented operations: Multi-tenant org model, audit logs,
+    optional EU/US data region fields in schema, security-focused middleware
+    (helmet, CORS, rate limiting), and quota accounting only on successful
+    completions (with safeguards against double-counting on retries).
+
+--------------------------------------------------------------------------------
+
+4. WHY BUILD IT & TARGET AUDIENCE
+--------------------------------------------------------------------------------
+Why:
+  Legal work involving NDAs, MSAs, employment agreements, and similar documents
+  repeats the same pattern recognition tasks across clients. Automating the
+  structured first pass—while leaving final judgment to humans—can improve
+  throughput and consistency if paired with strong tenancy, logging, and clear
+  output formats.
+
+Targeted people / segments:
+  • Solo attorneys and small practices (Solo plan positioning).
+  • Growing law firms needing shared workspace, audit logs, webhooks (Firm).
+  • High-volume shops and integrations (Max: API emphasis).
+  • Enterprises needing custom volume and integrations (Enterprise tier).
+
+Secondary persona implied by copy and architecture:
+  • Product/engineering teams at legal-tech platforms embedding analysis via
+    API and webhooks (“white-label API” messaging on the marketing site).
+
+--------------------------------------------------------------------------------
+
+5. TECH STACK (HIGH LEVEL)
+--------------------------------------------------------------------------------
+
+FRONTEND (frontend/)
+  • Framework: Next.js 16 (App Router), React 19
+  • Language: TypeScript
+  • Styling/UI: Tailwind CSS v4, lucide-react icons
+  • Forms & validation: react-hook-form, @hookform/resolvers, Zod
+  • HTTP client: axios
+  • Client state: Zustand
+  • Utilities: clsx, tailwind-merge
+  • Tooling: ESLint (eslint-config-next)
+
+BACKEND (backend/)
+  • Runtime & language: Node.js (ES modules), TypeScript
+  • HTTP framework: Fastify 4 (+ plugins: CORS, helmet, JWT, multipart,
+    rate-limit; raw body for webhooks)
+  • Database ORM: Prisma 5
+  • Database: PostgreSQL (DATABASE_URL / DIRECT_URL)
+  • Background jobs: BullMQ + Redis (ioredis) — contract-analysis queue/worker
+  • AI providers (configurable): Anthropic Claude SDK; Google GenAI SDK
+    (selection via AI_PROVIDER environment configuration)
+  • Document ingestion: pdf-parse, mammoth (DOCX), docx, pdfkit (generation),
+    pdf2pic, tesseract.js (OCR pathway support as wired in dependencies)
+  • Object storage: AWS SDK S3 + presigned URLs pattern
+  • Payments: Stripe (+ webhook handling)
+  • Email: Resend
+  • Auth/security: bcrypt password hashing, JWT/fastify-jwt patterns, API key
+    middleware
+  • Logging: pino / pino-pretty
+  • Testing: Vitest, supertest
+
+INFRA / EXTERNAL SERVICES (typical deployment assumptions)
+  • PostgreSQL, Redis, AWS S3, Stripe, email provider (Resend), Anthropic and/or
+    Google AI APIs depending on configuration.
+
+--------------------------------------------------------------------------------
+
+6. DOMAIN MODEL (SUMMARY FROM SCHEMA)
+--------------------------------------------------------------------------------
+Core entities include Organization (Org) with subscription plan and analysis
+quota; Users with roles (ADMIN, ATTORNEY, VIEWER); Contracts with lifecycle
+status; Analysis records storing structured JSON results, summaries, optional
+redline storage keys, token usage, and processing metrics; API keys; org-scoped
+webhooks; audit logs.
+
+Plans referenced in schema: SOLO, FIRM, MAX, ENTERPRISE — aligned with monthly
+analysis limits shown in the pricing UI.
+
+================================================================================
+END OF OVERVIEW
+================================================================================
