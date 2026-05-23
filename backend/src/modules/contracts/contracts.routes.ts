@@ -86,7 +86,7 @@ const contractsRoutes: FastifyPluginAsync = async (app) => {
       return { success: false, error: { code: "FORBIDDEN", message: "admin required" } };
     }
     const { id } = req.params as { id: string };
-    const hardDelete = req.org?.plan === "API_WHITELABEL";
+    const hardDelete = (req.org?.plan as string) === "API_WHITELABEL";
     await removeContract(req.org!.id, id, hardDelete);
     return { success: true, data: { success: true } };
   });

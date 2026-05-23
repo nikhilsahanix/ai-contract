@@ -2,7 +2,7 @@ import { Queue } from "bullmq";
 import { redis } from "../config/redis.js";
 import { logger } from "../lib/logger.js";
 import { analysisWorker } from "./analysis.worker.js";
-import type { AnalysisJobPayload } from "./analysis.worker.js";
+import type { AnalysisJobPayload } from "../lib/queue.js";
 
 // ─── Queue definition (shared config) ────────────────────────────────────────
 
