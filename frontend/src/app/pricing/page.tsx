@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useAuthStore } from "@/store/authStore";
 import { useRouter }    from "next/navigation";
@@ -7,7 +7,7 @@ import api from "@/lib/api";
 import { Check, Loader2, Zap, ArrowRight, ShieldCheck, Clock, Mail } from "lucide-react";
 import Link from "next/link";
 
-// ─── Plans ────────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Plans â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const PLANS = [
   {
@@ -92,15 +92,15 @@ const PLANS = [
 ];
 
 const FAQS = [
-  { q: "What counts as one analysis?",     a: "One analysis = one contract uploaded. Failed analyses never count against your quota — you're only charged for successful completions." },
+  { q: "What counts as one analysis?",     a: "One analysis = one contract uploaded. Failed analyses never count against your quota â€” you're only charged for successful completions." },
   { q: "Can I change plans anytime?",      a: "Yes. Upgrades are instant; downgrades take effect at the end of your billing period. Your monthly quota resets on every billing cycle." },
   { q: "Are my contracts private?",        a: "Completely. Contracts are encrypted at rest (AES-256) and in transit. Row-level security ensures your firm's data is isolated from all others." },
   { q: "What file types are supported?",   a: "PDF and DOCX files up to 50 MB. Solo plans support up to 50 pages, Firm up to 200 pages, Max and Enterprise up to 500 pages." },
-  { q: "Is there a free trial?",           a: "Yes — all self-serve plans include a 14-day free trial. No credit card required to start." },
+  { q: "Is there a free trial?",           a: "Yes â€” all self-serve plans include a 14-day free trial. No credit card required to start." },
   { q: "What happens if I hit my limit?",  a: "You'll receive a warning at 80% usage. Once the limit is reached, uploads are paused until your next billing cycle or you upgrade." },
 ];
 
-// ─── Plan label map for display ───────────────────────────────────────────────
+// â”€â”€â”€ Plan label map for display â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export const PLAN_DISPLAY: Record<string, { name: string; colour: string }> = {
   SOLO:       { name: "Solo",       colour: "text-zinc-400"    },
   FIRM:       { name: "Firm",       colour: "text-blue-400"    },
@@ -147,28 +147,28 @@ export default function PricingPage() {
     setLoadingPlan(planId);
     setError(null);
     try {
-      // Step 1 — create Razorpay order on backend
+      // Step 1 â€” create Razorpay order on backend
       const res = await api.post("/billing/checkout", { plan: planId });
       const { orderId, amount, currency, keyId } = res.data?.data ?? {};
 
       if (!orderId) { setError("Failed to create payment order."); return; }
 
-      // Step 2 — load Razorpay checkout script
+      // Step 2 â€” load Razorpay checkout script
       const loaded = await loadRazorpayScript();
       if (!loaded) { setError("Failed to load payment gateway. Check your connection."); return; }
 
-      // Step 3 — open Razorpay modal
+      // Step 3 â€” open Razorpay modal
       const rzp = new (window as any).Razorpay({
         key:         keyId,
         amount,
         currency,
         order_id:    orderId,
         name:        "ContractIQ",
-        description: `${planId} Plan — Monthly`,
+        description: `${planId} Plan â€” Monthly`,
         prefill:     { email: user.email },
         theme:       { color: "#6366F1" },
         handler: async (payment: any) => {
-          // Step 4 — verify HMAC on backend and activate plan
+          // Step 4 â€” verify HMAC on backend and activate plan
           try {
             await api.post("/billing/verify", {
               razorpay_order_id:   payment.razorpay_order_id,
@@ -205,7 +205,7 @@ export default function PricingPage() {
             ? <Link href="/dashboard" className="flex items-center gap-1.5 text-zinc-400 hover:text-white transition-colors">Dashboard <ArrowRight size={12} /></Link>
             : <>
                 <Link href="/login"    className="text-zinc-400 hover:text-white transition-colors">Sign in</Link>
-                <Link href="/register" className="bg-primary-gold hover:bg-[#a68626] text-black font-bold px-4 py-2 rounded-lg transition-colors">Start Free Trial</Link>
+                <Link href="/register" className="bg-primary-gold hover:bg-gold-hover text-black font-bold px-4 py-2 rounded-lg transition-colors">Start Free Trial</Link>
               </>
           }
         </div>
@@ -229,7 +229,7 @@ export default function PricingPage() {
           </p>
 
           {/* Toggle */}
-          <div className="inline-flex items-center gap-3 bg-[#111] border border-[#222] rounded-xl p-1">
+          <div className="inline-flex items-center gap-3 bg-surface border border-border rounded-xl p-1">
             {(["Monthly", "Annual"] as const).map((label) => {
               const isAnnual = label === "Annual";
               const active   = annual === isAnnual;
@@ -272,14 +272,14 @@ export default function PricingPage() {
                 onMouseMove={(e) => handleMouseMove(e, i)}
                 className={`relative flex flex-col rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1
                   ${plan.highlight
-                    ? "bg-[#111] border-2 border-primary-gold shadow-xl shadow-primary-gold/10"
-                    : "bg-[#111] border border-[#222] hover:border-[#333]"
+                    ? "bg-surface border-2 border-primary-gold shadow-xl shadow-primary-gold/10"
+                    : "bg-surface border border-border hover:border-border-mid"
                   }`}
               >
                 {/* Top line */}
                 <div className={`absolute top-0 left-6 right-6 h-px
                   ${plan.highlight
-                    ? "bg-linear-to-r from-primary-gold/60 via-[#e8bc50]/80 to-primary-gold/60"
+                    ? "bg-linear-to-r from-primary-gold/60 via-gold-light/80 to-primary-gold/60"
                     : "bg-linear-to-r from-transparent via-primary-gold/15 to-transparent"
                   }`}
                 />
@@ -319,7 +319,7 @@ export default function PricingPage() {
                       </div>
                       {annual && (
                         <p className="text-[10px] text-green-400 mt-1">
-                          Billed ${(plan.annualPrice ?? 0) * 12}/yr · save ${((plan.monthlyPrice ?? 0) - (plan.annualPrice ?? 0)) * 12}
+                          Billed ${(plan.annualPrice ?? 0) * 12}/yr Â· save ${((plan.monthlyPrice ?? 0) - (plan.annualPrice ?? 0)) * 12}
                         </p>
                       )}
                       {plan.analysisLimit && (
@@ -337,12 +337,12 @@ export default function PricingPage() {
                   disabled={loadingPlan !== null || isCurrentPlan}
                   className={`w-full py-2.5 rounded-xl font-bold text-sm transition-all duration-200 flex justify-center items-center gap-2 mb-6 disabled:opacity-50 disabled:cursor-not-allowed
                     ${plan.highlight
-                      ? "bg-primary-gold hover:bg-[#a68626] text-black"
+                      ? "bg-primary-gold hover:bg-gold-hover text-black"
                       : plan.enterprise
                         ? "bg-transparent border border-purple-500/40 hover:border-purple-500/70 text-purple-400"
                         : isCurrentPlan
                           ? "bg-green-400/10 border border-green-400/20 text-green-400 cursor-default"
-                          : "bg-border border border-[#2a2a2a] hover:border-primary-gold/30 text-white"
+                          : "bg-border border border-border hover:border-primary-gold/30 text-white"
                     }`}
                 >
                   {isLoading ? (
@@ -373,13 +373,13 @@ export default function PricingPage() {
         </div>
 
         {/* Trust bar */}
-        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-px bg-border rounded-2xl overflow-hidden border border-[#222] mb-20">
+        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-px bg-border rounded-2xl overflow-hidden border border-border mb-20">
           {[
             { icon: ShieldCheck, title: "AES-256 encryption",  desc: "Contracts encrypted at rest and in transit" },
             { icon: Clock,       title: "60-second analysis",   desc: "Upload to risk report in under a minute"   },
             { icon: Zap,         title: "Failed = no charge",   desc: "Only successful analyses count toward quota" },
           ].map((t) => (
-            <div key={t.title} className="flex items-center gap-4 px-6 py-5 bg-[#111] hover:bg-card-dark transition-colors">
+            <div key={t.title} className="flex items-center gap-4 px-6 py-5 bg-surface hover:bg-card-dark transition-colors">
               <t.icon size={16} className="text-primary-gold shrink-0" />
               <div>
                 <p className="text-sm font-semibold text-white">{t.title}</p>
@@ -396,7 +396,7 @@ export default function PricingPage() {
           </h2>
           <div className="space-y-2">
             {FAQS.map((faq, i) => (
-              <div key={faq.q} className="border border-[#222] rounded-xl overflow-hidden">
+              <div key={faq.q} className="border border-border rounded-xl overflow-hidden">
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-card-dark transition-colors"

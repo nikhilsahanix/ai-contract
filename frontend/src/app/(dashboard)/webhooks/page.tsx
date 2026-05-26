@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import api from "@/lib/api";
@@ -48,7 +48,7 @@ function CreateModal({ onClose, onCreated }: { onClose: () => void; onCreated: (
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-lg bg-[#111] border border-[#222] rounded-2xl shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-lg bg-surface border border-border rounded-2xl shadow-2xl overflow-hidden">
         <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-primary-gold/60 to-transparent" />
         <div className="flex items-center justify-between px-6 py-4 border-b border-border">
           <div className="flex items-center gap-3">
@@ -70,7 +70,7 @@ function CreateModal({ onClose, onCreated }: { onClose: () => void; onCreated: (
               value={url}
               onChange={e => setUrl(e.target.value)}
               placeholder="https://yourserver.com/webhooks/contractiq"
-              className="w-full bg-[#0d0d0d] border border-[#222] rounded-xl px-4 py-2.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors"
+              className="w-full bg-bg-dark border border-border rounded-xl px-4 py-2.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors"
             />
           </div>
           <div>
@@ -81,7 +81,7 @@ function CreateModal({ onClose, onCreated }: { onClose: () => void; onCreated: (
               value={secret}
               onChange={e => setSecret(e.target.value)}
               placeholder="Your shared secret for HMAC verification"
-              className="w-full bg-[#0d0d0d] border border-[#222] rounded-xl px-4 py-2.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors"
+              className="w-full bg-bg-dark border border-border rounded-xl px-4 py-2.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors"
             />
             <p className="text-[10px] text-zinc-700 mt-1">Payloads are signed with HMAC-SHA256 via <code className="text-zinc-600">X-ContractIQ-Signature</code></p>
           </div>
@@ -92,9 +92,9 @@ function CreateModal({ onClose, onCreated }: { onClose: () => void; onCreated: (
                 <button
                   key={opt.value}
                   onClick={() => toggleEvent(opt.value)}
-                  className={`w-full flex items-start gap-3 p-3 rounded-xl border text-left transition-all cursor-pointer ${events.includes(opt.value) ? "border-primary-gold/30 bg-primary-gold/5" : "border-[#222] hover:border-[#333]"}`}
+                  className={`w-full flex items-start gap-3 p-3 rounded-xl border text-left transition-all cursor-pointer ${events.includes(opt.value) ? "border-primary-gold/30 bg-primary-gold/5" : "border-border hover:border-border-mid"}`}
                 >
-                  <div className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-colors ${events.includes(opt.value) ? "bg-primary-gold border-primary-gold" : "border-[#444]"}`}>
+                  <div className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-colors ${events.includes(opt.value) ? "bg-primary-gold border-primary-gold" : "border-border-mid"}`}>
                     {events.includes(opt.value) && <Check size={10} className="text-black" />}
                   </div>
                   <div>
@@ -115,7 +115,7 @@ function CreateModal({ onClose, onCreated }: { onClose: () => void; onCreated: (
             <button
               onClick={submit}
               disabled={loading}
-              className="flex items-center gap-2 bg-primary-gold hover:bg-[#5254d4] disabled:opacity-50 text-black font-bold px-4 py-2 rounded-xl transition-all text-sm cursor-pointer"
+              className="flex items-center gap-2 bg-primary-gold hover:bg-gold-hover disabled:opacity-50 text-black font-bold px-4 py-2 rounded-xl transition-all text-sm cursor-pointer"
             >
               {loading ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />}
               Create webhook
@@ -164,7 +164,7 @@ export default function WebhooksPage() {
         </div>
         <button
           onClick={() => setShowCreate(true)}
-          className="flex items-center gap-2 bg-primary-gold hover:bg-[#5254d4] text-black px-4 py-2.5 rounded-xl font-bold transition-all text-sm cursor-pointer"
+          className="flex items-center gap-2 bg-primary-gold hover:bg-gold-hover text-black px-4 py-2.5 rounded-xl font-bold transition-all text-sm cursor-pointer"
         >
           <Plus size={14} /> Add Endpoint
         </button>
@@ -177,7 +177,7 @@ export default function WebhooksPage() {
           { icon: Globe,  label: "HTTPS POST", desc: "Standard JSON payload with event metadata"         },
           { icon: Check,  label: "HMAC-signed",desc: "Verify authenticity with X-ContractIQ-Signature"   },
         ].map(item => (
-          <div key={item.label} className="bg-[#111] border border-[#1e1e1e] rounded-xl p-4">
+          <div key={item.label} className="bg-surface border border-border rounded-xl p-4">
             <item.icon size={14} className="text-primary-gold mb-2" />
             <p className="text-xs font-semibold text-white">{item.label}</p>
             <p className="text-[10px] text-zinc-600 mt-0.5">{item.desc}</p>
@@ -188,7 +188,7 @@ export default function WebhooksPage() {
       {loading ? (
         <div className="flex justify-center items-center h-40"><Loader2 size={20} className="text-zinc-700 animate-spin" /></div>
       ) : webhooks.length === 0 ? (
-        <div className="border-2 border-dashed border-[#222] rounded-2xl p-12 text-center">
+        <div className="border-2 border-dashed border-border rounded-2xl p-12 text-center">
           <Webhook size={28} className="text-zinc-700 mx-auto mb-4" />
           <h3 className="text-sm font-semibold text-white mb-1">No webhooks configured</h3>
           <p className="text-xs text-zinc-600 mb-4">Add an endpoint to receive real-time analysis events</p>
@@ -202,7 +202,7 @@ export default function WebhooksPage() {
       ) : (
         <div className="space-y-2">
           {webhooks.map(wh => (
-            <div key={wh.id} className="bg-[#111] border border-[#1e1e1e] rounded-xl p-4">
+            <div key={wh.id} className="bg-surface border border-border rounded-xl p-4">
               <div className="flex items-start gap-4">
                 <div className="w-9 h-9 rounded-lg bg-primary-gold/8 border border-primary-gold/15 flex items-center justify-center shrink-0 mt-0.5">
                   <Webhook size={14} className="text-primary-gold" />

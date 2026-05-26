@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import api from "@/lib/api";
@@ -34,7 +34,7 @@ export default function ForgotPasswordPage() {
 
       <div className="relative w-full max-w-sm">
         {/* Card */}
-        <div className="bg-[#111] border border-[#1e1e1e] rounded-2xl p-8 shadow-2xl relative overflow-hidden">
+        <div className="bg-surface border border-border rounded-2xl p-8 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-primary-gold/40 to-transparent" />
 
           {sent ? (
@@ -49,7 +49,7 @@ export default function ForgotPasswordPage() {
               </p>
               <p className="text-xs text-zinc-600 mb-4">Didn't receive it? Check your spam folder.</p>
               <Link href="/login" className="text-xs text-primary-gold hover:text-gold-light transition-colors">
-                ← Back to sign in
+                â† Back to sign in
               </Link>
             </div>
           ) : (
@@ -73,7 +73,7 @@ export default function ForgotPasswordPage() {
                       value={email}
                       onChange={e => setEmail(e.target.value)}
                       placeholder="you@lawfirm.com"
-                      className="w-full bg-[#0d0d0d] border border-[#222] rounded-xl pl-10 pr-4 py-2.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors"
+                      className="w-full bg-bg-dark border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors"
                     />
                   </div>
                 </div>
@@ -85,9 +85,9 @@ export default function ForgotPasswordPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full flex items-center justify-center gap-2 bg-primary-gold hover:bg-[#5254d4] disabled:opacity-50 text-black font-bold py-2.5 rounded-xl transition-all text-sm cursor-pointer"
+                  className="w-full flex items-center justify-center gap-2 bg-primary-gold hover:bg-gold-hover disabled:opacity-50 text-black font-bold py-2.5 rounded-xl transition-all text-sm cursor-pointer"
                 >
-                  {loading ? <><Loader2 size={14} className="animate-spin" /> Sending…</> : "Send reset link"}
+                  {loading ? <><Loader2 size={14} className="animate-spin" /> Sendingâ€¦</> : "Send reset link"}
                 </button>
               </form>
 

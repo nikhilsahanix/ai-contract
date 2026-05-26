@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import api from "@/lib/api";
@@ -38,7 +38,7 @@ function CreateKeyModal({ onClose, onCreated }: { onClose: () => void; onCreated
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-md bg-[#111] border border-[#222] rounded-2xl shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-md bg-surface border border-border rounded-2xl shadow-2xl overflow-hidden">
         <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-primary-gold/60 to-transparent" />
         <div className="flex items-center justify-between px-6 py-4 border-b border-border">
           <div className="flex items-center gap-3">
@@ -47,7 +47,7 @@ function CreateKeyModal({ onClose, onCreated }: { onClose: () => void; onCreated
             </div>
             <div>
               <h2 className="text-sm font-bold text-white">Create API Key</h2>
-              <p className="text-[10px] text-zinc-600">Key shown only once — save it now</p>
+              <p className="text-[10px] text-zinc-600">Key shown only once â€” save it now</p>
             </div>
           </div>
           <button onClick={onClose} className="text-zinc-600 hover:text-zinc-400 transition-colors cursor-pointer"><X size={16} /></button>
@@ -61,7 +61,7 @@ function CreateKeyModal({ onClose, onCreated }: { onClose: () => void; onCreated
               onChange={e => setName(e.target.value)}
               onKeyDown={e => e.key === "Enter" && submit()}
               placeholder="e.g. Production webhook, CI pipeline"
-              className="w-full bg-[#0d0d0d] border border-[#222] rounded-xl px-4 py-2.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors"
+              className="w-full bg-bg-dark border border-border rounded-xl px-4 py-2.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors"
             />
           </div>
           {error && <p className="text-xs text-red-400 bg-red-400/10 border border-red-400/20 px-3 py-2 rounded-lg">{error}</p>}
@@ -70,7 +70,7 @@ function CreateKeyModal({ onClose, onCreated }: { onClose: () => void; onCreated
             <button
               onClick={submit}
               disabled={loading}
-              className="flex items-center gap-2 bg-primary-gold hover:bg-[#5254d4] disabled:opacity-50 text-black font-bold px-4 py-2 rounded-xl transition-all text-sm cursor-pointer"
+              className="flex items-center gap-2 bg-primary-gold hover:bg-gold-hover disabled:opacity-50 text-black font-bold px-4 py-2 rounded-xl transition-all text-sm cursor-pointer"
             >
               {loading ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />}
               Create key
@@ -95,7 +95,7 @@ function RevealModal({ rawKey, onClose }: { rawKey: string; onClose: () => void 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
-      <div className="relative w-full max-w-lg bg-[#111] border border-primary-gold/30 rounded-2xl shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-lg bg-surface border border-primary-gold/30 rounded-2xl shadow-2xl overflow-hidden">
         <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-primary-gold/60 to-transparent" />
         <div className="p-6 space-y-4">
           <div className="flex items-center gap-3 mb-2">
@@ -107,15 +107,15 @@ function RevealModal({ rawKey, onClose }: { rawKey: string; onClose: () => void 
               <p className="text-[11px] text-zinc-500">It will not be shown again after you close this</p>
             </div>
           </div>
-          <div className="bg-[#0a0a0a] border border-[#333] rounded-xl p-4 font-mono text-sm text-zinc-300 break-all flex items-center gap-3">
-            <span className="flex-1">{visible ? rawKey : rawKey.replace(/./g, "•")}</span>
+          <div className="bg-bg-dark border border-border-mid rounded-xl p-4 font-mono text-sm text-zinc-300 break-all flex items-center gap-3">
+            <span className="flex-1">{visible ? rawKey : rawKey.replace(/./g, "â€¢")}</span>
             <button onClick={() => setVisible(v => !v)} className="text-zinc-600 hover:text-zinc-400 shrink-0 cursor-pointer">
               {visible ? <EyeOff size={14} /> : <Eye size={14} />}
             </button>
           </div>
           <button
             onClick={copy}
-            className="w-full flex items-center justify-center gap-2 bg-primary-gold hover:bg-[#5254d4] text-black font-bold py-2.5 rounded-xl transition-all text-sm cursor-pointer"
+            className="w-full flex items-center justify-center gap-2 bg-primary-gold hover:bg-gold-hover text-black font-bold py-2.5 rounded-xl transition-all text-sm cursor-pointer"
           >
             {copied ? <><Check size={14} /> Copied!</> : <><Copy size={14} /> Copy to clipboard</>}
           </button>
@@ -123,7 +123,7 @@ function RevealModal({ rawKey, onClose }: { rawKey: string; onClose: () => void 
             onClick={onClose}
             className="w-full text-center text-xs text-zinc-600 hover:text-zinc-400 transition-colors py-1 cursor-pointer"
           >
-            I've saved the key — close
+            I've saved the key â€” close
           </button>
         </div>
       </div>
@@ -170,7 +170,7 @@ export default function ApiKeysPage() {
         </div>
         <button
           onClick={() => setShowCreate(true)}
-          className="flex items-center gap-2 bg-primary-gold hover:bg-[#5254d4] text-black px-4 py-2.5 rounded-xl font-bold transition-all text-sm cursor-pointer"
+          className="flex items-center gap-2 bg-primary-gold hover:bg-gold-hover text-black px-4 py-2.5 rounded-xl font-bold transition-all text-sm cursor-pointer"
         >
           <Plus size={14} /> New Key
         </button>
@@ -180,7 +180,7 @@ export default function ApiKeysPage() {
       <div className="flex items-start gap-3 bg-primary-gold/5 border border-primary-gold/15 px-4 py-3 rounded-xl mb-6">
         <Shield size={14} className="text-primary-gold mt-0.5 shrink-0" />
         <p className="text-[11px] text-zinc-400 leading-relaxed">
-          API keys grant full access to your org's data. Treat them like passwords — never commit them to version control or share in plaintext.
+          API keys grant full access to your org's data. Treat them like passwords â€” never commit them to version control or share in plaintext.
           Keys are shown only once at creation.
         </p>
       </div>
@@ -190,7 +190,7 @@ export default function ApiKeysPage() {
           <Loader2 size={20} className="text-zinc-700 animate-spin" />
         </div>
       ) : keys.length === 0 ? (
-        <div className="border-2 border-dashed border-[#222] rounded-2xl p-12 text-center">
+        <div className="border-2 border-dashed border-border rounded-2xl p-12 text-center">
           <Key size={28} className="text-zinc-700 mx-auto mb-4" />
           <h3 className="text-sm font-semibold text-white mb-1">No API keys yet</h3>
           <p className="text-xs text-zinc-600 mb-4">Create a key to access ContractIQ programmatically</p>
@@ -204,14 +204,14 @@ export default function ApiKeysPage() {
       ) : (
         <div className="space-y-2">
           {keys.map(key => (
-            <div key={key.id} className="flex items-center gap-4 bg-[#111] border border-[#1e1e1e] rounded-xl p-4">
+            <div key={key.id} className="flex items-center gap-4 bg-surface border border-border rounded-xl p-4">
               <div className="w-9 h-9 rounded-lg bg-primary-gold/8 border border-primary-gold/15 flex items-center justify-center shrink-0">
                 <Key size={14} className="text-primary-gold" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-white">{key.name}</p>
                 <div className="flex items-center gap-3 mt-0.5">
-                  <span className="font-mono text-[10px] text-zinc-600">{key.keyPrefix}••••••••</span>
+                  <span className="font-mono text-[10px] text-zinc-600">{key.keyPrefix}â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢</span>
                   {key.lastUsedAt ? (
                     <span className="text-[10px] text-zinc-600 flex items-center gap-1">
                       <Clock size={9} /> Last used {new Date(key.lastUsedAt).toLocaleDateString()}

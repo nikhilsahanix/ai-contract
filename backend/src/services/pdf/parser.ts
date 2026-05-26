@@ -177,15 +177,18 @@ async function tryOCR(buffer: Buffer, pageCount: number): Promise<ExtractionResu
   const warnings: string[] = ["Document extracted via OCR — minor character errors may exist."];
 
   // Dynamically import heavy OCR deps so they don't slow startup
-  const { createWorker } = await import("tesseract.js");
-  const { fromBuffer }   = await import("pdf2pic");
+  const pdfjsLib              = await import("pdfjs-dist");
+  const { createCanvas }      = await import("canvas");
+  const { createWorker }      = await import("tesseract.js");
 
-  const converter = fromBuffer(buffer, {
-    density: 200,       // 200 DPI is good balance of quality vs speed
-    format: "png",
-    width: 1700,
-    height: 2200,
-  });
+  // PDF.js has no worker thread in Node.js — disable it
+  (pdfjsLib as any).GlobalWorkerOptions.workerSrc = "";
+
+  const pdfDoc = await pdfjsLib.getDocument({
+    data: new Uint8Array(buffer),
+    useSystemFonts: true,
+    disableFontFace: true,
+  }).promise;
 
   const worker = await createWorker("eng");
   const pageTexts: string[] = [];
@@ -199,9 +202,17 @@ async function tryOCR(buffer: Buffer, pageCount: number): Promise<ExtractionResu
 
   for (let i = 1; i <= maxPages; i++) {
     try {
-      const page     = await converter(i, { responseType: "buffer" });
-      const { data } = await worker.recognize(page.buffer as Buffer);
-      const text     = cleanExtractedText(data.text);
+      const page     = await pdfDoc.getPage(i);
+      const viewport = page.getViewport({ scale: 2.0 }); // ~200 DPI equivalent
+      const canvas   = createCanvas(Math.ceil(viewport.width), Math.ceil(viewport.height));
+      const ctx      = canvas.getContext("2d");
+
+      await page.render({ canvasContext: ctx as any, viewport }).promise;
+      page.cleanup();
+
+      const imageBuffer = canvas.toBuffer("image/png");
+      const { data }    = await worker.recognize(imageBuffer);
+      const text        = cleanExtractedText(data.text);
       pageTexts.push(text);
       structuredPages.push({
         pageNumber: i,
