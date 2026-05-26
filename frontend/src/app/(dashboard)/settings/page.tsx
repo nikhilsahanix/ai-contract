@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import {
@@ -120,8 +120,8 @@ export default function SettingsPage() {
         placeholder={placeholder}
         className={`w-full border rounded-xl px-4 py-2.5 text-sm outline-none transition-colors
           ${disabled
-            ? "bg-[#0a0a0a] border-[#1a1a1a] text-zinc-600 cursor-not-allowed"
-            : "bg-[#0d0d0d] border-[#222] text-zinc-300 focus:border-primary-gold/40 placeholder-zinc-700"
+            ? "bg-bg-dark border-border text-zinc-600 cursor-not-allowed"
+            : "bg-bg-dark border-border text-zinc-300 focus:border-primary-gold/40 placeholder-zinc-700"
           }`}
       />
     </div>
@@ -135,7 +135,7 @@ export default function SettingsPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-0 border-b border-[#1e1e1e] mb-8">
+      <div className="flex gap-0 border-b border-border mb-8">
         {TABS.map(({ id, label, icon: Icon }) => (
           <button
             key={id}
@@ -148,11 +148,11 @@ export default function SettingsPage() {
         ))}
       </div>
 
-      {/* ── PROFILE ── */}
+      {/* â”€â”€ PROFILE â”€â”€ */}
       {tab === "profile" && (
         <div className="space-y-6">
           {/* Profile card */}
-          <div className="bg-[#111] border border-[#1e1e1e] rounded-2xl p-6 relative overflow-hidden">
+          <div className="bg-surface border border-border rounded-2xl p-6 relative overflow-hidden">
             <div className="absolute top-0 left-8 right-8 h-px bg-linear-to-r from-transparent via-primary-gold/20 to-transparent" />
             <div className="flex items-center gap-4 mb-6">
               <div className="w-12 h-12 rounded-full bg-primary-gold/10 border border-primary-gold/25 flex items-center justify-center text-primary-gold text-lg font-bold">
@@ -160,7 +160,7 @@ export default function SettingsPage() {
               </div>
               <div>
                 <p className="font-semibold text-white text-sm">{user?.email}</p>
-                <p className="text-xs text-zinc-500 mt-0.5 capitalize">{user?.role?.toLowerCase()} · {user?.org?.name}</p>
+                <p className="text-xs text-zinc-500 mt-0.5 capitalize">{user?.role?.toLowerCase()} Â· {user?.org?.name}</p>
               </div>
             </div>
 
@@ -177,7 +177,7 @@ export default function SettingsPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex items-center gap-2 bg-primary-gold hover:bg-[#5254d4] disabled:opacity-50 text-black font-bold px-4 py-2 rounded-xl transition-all text-sm cursor-pointer"
+                  className="flex items-center gap-2 bg-primary-gold hover:bg-gold-hover disabled:opacity-50 text-black font-bold px-4 py-2 rounded-xl transition-all text-sm cursor-pointer"
                 >
                   {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Save changes"}
                 </button>
@@ -194,7 +194,7 @@ export default function SettingsPage() {
           </div>
 
           {/* Firm card */}
-          <div className="bg-[#111] border border-[#1e1e1e] rounded-2xl p-6">
+          <div className="bg-surface border border-border rounded-2xl p-6">
             <div className="flex items-center gap-3 mb-5">
               <Building2 size={14} className="text-zinc-500" />
               <h3 className="font-semibold text-white text-sm">Firm Details</h3>
@@ -203,8 +203,8 @@ export default function SettingsPage() {
               <Field label="Organization Name" value={user?.org?.name ?? ""} disabled />
               <div>
                 <label className="block text-[11px] font-semibold text-zinc-500 uppercase tracking-wider mb-1.5">Workspace URL</label>
-                <div className="flex items-center bg-[#0a0a0a] border border-[#1a1a1a] rounded-xl overflow-hidden opacity-60">
-                  <span className="text-zinc-600 text-xs pl-3 pr-2 bg-[#111] border-r border-[#222] py-2.5 shrink-0">contractiq.com/</span>
+                <div className="flex items-center bg-bg-dark border border-border rounded-xl overflow-hidden opacity-60">
+                  <span className="text-zinc-600 text-xs pl-3 pr-2 bg-surface border-r border-border py-2.5 shrink-0">contractiq.com/</span>
                   <input disabled defaultValue={user?.org?.slug ?? ""} className="w-full bg-transparent px-3 py-2.5 text-zinc-600 outline-none text-sm cursor-not-allowed" />
                 </div>
               </div>
@@ -212,19 +212,19 @@ export default function SettingsPage() {
           </div>
 
           {/* Change password */}
-          <div className="bg-[#111] border border-[#1e1e1e] rounded-2xl p-6">
+          <div className="bg-surface border border-border rounded-2xl p-6">
             <div className="flex items-center gap-3 mb-5">
               <Lock size={14} className="text-zinc-500" />
               <h3 className="font-semibold text-white text-sm">Change Password</h3>
             </div>
             <form onSubmit={handleChangePassword} className="space-y-4">
-              <Field label="Current Password" type="password" value={currentPw} onChange={setCurrentPw} placeholder="••••••••" />
+              <Field label="Current Password" type="password" value={currentPw} onChange={setCurrentPw} placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" />
               <Field label="New Password"     type="password" value={newPw}     onChange={setNewPw}     placeholder="Min. 8 characters" />
               <div className="flex justify-end pt-1">
                 <button
                   type="submit"
                   disabled={pwLoading}
-                  className="flex items-center gap-2 border border-[#2a2a2a] hover:border-primary-gold/30 text-white text-sm font-medium px-4 py-2 rounded-xl transition-all cursor-pointer disabled:opacity-50"
+                  className="flex items-center gap-2 border border-border hover:border-primary-gold/30 text-white text-sm font-medium px-4 py-2 rounded-xl transition-all cursor-pointer disabled:opacity-50"
                 >
                   {pwLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Update password"}
                 </button>
@@ -240,11 +240,11 @@ export default function SettingsPage() {
         </div>
       )}
 
-      {/* ── BILLING ── */}
+      {/* â”€â”€ BILLING â”€â”€ */}
       {tab === "billing" && (
         <div className="space-y-5">
           {/* Current plan card */}
-          <div className={`bg-[#111] border rounded-2xl p-6 relative overflow-hidden ${planMeta.border}`}>
+          <div className={`bg-surface border rounded-2xl p-6 relative overflow-hidden ${planMeta.border}`}>
             <div className={`absolute top-0 left-8 right-8 h-px bg-linear-to-r from-transparent via-current to-transparent opacity-40 ${planMeta.colour}`} />
             <div className="absolute top-0 right-0 w-48 h-48 bg-primary-gold/3 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
 
@@ -267,7 +267,7 @@ export default function SettingsPage() {
               <div className="flex justify-between items-center text-xs mb-2">
                 <span className="text-zinc-500">Analyses used this month</span>
                 <span className={`font-bold tabular-nums ${quotaCritical ? "text-red-400" : quotaWarning ? "text-amber-400" : "text-white"}`}>
-                  {isEnterprise ? `${analysisCount} used · unlimited` : `${analysisCount} / ${analysisLimit}`}
+                  {isEnterprise ? `${analysisCount} used Â· unlimited` : `${analysisCount} / ${analysisLimit}`}
                 </span>
               </div>
               {!isEnterprise && (
@@ -300,7 +300,7 @@ export default function SettingsPage() {
               {!isEnterprise && (
                 <Link
                   href="/pricing"
-                  className="group relative flex items-center justify-center gap-2 w-full bg-primary-gold hover:bg-[#5254d4] text-black font-bold py-2.5 rounded-xl transition-all text-sm"
+                  className="group relative flex items-center justify-center gap-2 w-full bg-primary-gold hover:bg-gold-hover text-black font-bold py-2.5 rounded-xl transition-all text-sm"
                 >
                   <Zap className="w-4 h-4 fill-black" />
                   {planKey === "MAX" ? "Manage Plan" : "Upgrade Plan"}
@@ -309,7 +309,7 @@ export default function SettingsPage() {
               {isEnterprise && (
                 <a
                   href="mailto:billing@contractiq.com"
-                  className="flex items-center justify-center gap-2 w-full border border-[#2a2a2a] hover:border-[#3a3a3a] text-zinc-400 hover:text-white text-sm font-medium py-2.5 rounded-xl transition-all"
+                  className="flex items-center justify-center gap-2 w-full border border-border hover:border-border-mid text-zinc-400 hover:text-white text-sm font-medium py-2.5 rounded-xl transition-all"
                 >
                   Contact billing team
                 </a>
@@ -318,22 +318,22 @@ export default function SettingsPage() {
           </div>
 
           {/* Plan comparison */}
-          <div className="bg-[#111] border border-[#1e1e1e] rounded-2xl p-5">
+          <div className="bg-surface border border-border rounded-2xl p-5">
             <p className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest mb-4">All Plans</p>
             <div className="space-y-2">
               {[
-                { id: "SOLO",       limit: "25 analyses / mo",  price: "₹2,400/mo" },
-                { id: "FIRM",       limit: "100 analyses / mo", price: "₹8,200/mo" },
-                { id: "MAX",        limit: "250 analyses / mo", price: "₹20,500/mo" },
+                { id: "SOLO",       limit: "25 analyses / mo",  price: "â‚¹2,400/mo" },
+                { id: "FIRM",       limit: "100 analyses / mo", price: "â‚¹8,200/mo" },
+                { id: "MAX",        limit: "250 analyses / mo", price: "â‚¹20,500/mo" },
                 { id: "ENTERPRISE", limit: "Unlimited",         price: "Custom"     },
               ].map(p => {
                 const meta      = PLAN_META[p.id];
                 const isCurrent = planKey === p.id;
                 return (
-                  <div key={p.id} className={`flex items-center justify-between px-4 py-2.5 rounded-xl border transition-all ${isCurrent ? `${meta.bg} ${meta.border}` : "border-transparent hover:border-[#222]"}`}>
+                  <div key={p.id} className={`flex items-center justify-between px-4 py-2.5 rounded-xl border transition-all ${isCurrent ? `${meta.bg} ${meta.border}` : "border-transparent hover:border-border"}`}>
                     <div className="flex items-center gap-3">
                       <span className={`text-sm font-bold ${isCurrent ? meta.colour : "text-zinc-600"}`}>{meta.label}</span>
-                      {isCurrent && <span className="text-[9px] font-black uppercase tracking-widest text-green-400">← current</span>}
+                      {isCurrent && <span className="text-[9px] font-black uppercase tracking-widest text-green-400">â† current</span>}
                     </div>
                     <div className="flex items-center gap-4 text-right">
                       <span className="text-[11px] text-zinc-600">{p.limit}</span>
@@ -347,7 +347,7 @@ export default function SettingsPage() {
         </div>
       )}
 
-      {/* ── SECURITY ── */}
+      {/* â”€â”€ SECURITY â”€â”€ */}
       {tab === "security" && (
         <div className="space-y-3">
           {[
@@ -379,7 +379,7 @@ export default function SettingsPage() {
               onClick: () => router.push("/api-keys"),
             },
           ].map((item) => (
-            <div key={item.title} className="flex items-center justify-between bg-[#111] border border-[#1e1e1e] rounded-xl px-5 py-4">
+            <div key={item.title} className="flex items-center justify-between bg-surface border border-border rounded-xl px-5 py-4">
               <div className="flex items-start gap-3">
                 <item.icon size={15} className="text-zinc-600 mt-0.5 shrink-0" />
                 <div>
@@ -394,7 +394,7 @@ export default function SettingsPage() {
               </div>
               <button
                 onClick={item.onClick}
-                className="text-xs font-medium text-zinc-500 hover:text-primary-gold transition-colors border border-[#2a2a2a] hover:border-primary-gold/30 px-3 py-1.5 rounded-lg ml-4 shrink-0 cursor-pointer"
+                className="text-xs font-medium text-zinc-500 hover:text-primary-gold transition-colors border border-border hover:border-primary-gold/30 px-3 py-1.5 rounded-lg ml-4 shrink-0 cursor-pointer"
               >
                 {item.action}
               </button>

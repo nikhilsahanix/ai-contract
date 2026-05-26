@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -41,7 +41,7 @@ function ResetForm() {
     return (
       <div className="text-center">
         <p className="text-sm text-zinc-400 mb-4">Invalid or expired reset link.</p>
-        <Link href="/forgot-password" className="text-xs text-primary-gold hover:text-gold-light">Request a new link →</Link>
+        <Link href="/forgot-password" className="text-xs text-primary-gold hover:text-gold-light">Request a new link â†’</Link>
       </div>
     );
   }
@@ -53,7 +53,7 @@ function ResetForm() {
           <CheckCircle2 size={24} className="text-green-400" />
         </div>
         <h2 className="text-sm font-bold text-white mb-2">Password updated!</h2>
-        <p className="text-xs text-zinc-500">Redirecting you to sign in…</p>
+        <p className="text-xs text-zinc-500">Redirecting you to sign inâ€¦</p>
       </div>
     );
   }
@@ -77,7 +77,7 @@ function ResetForm() {
               value={password}
               onChange={e => setPassword(e.target.value)}
               placeholder="Minimum 8 characters"
-              className="w-full bg-[#0d0d0d] border border-[#222] rounded-xl pl-10 pr-10 py-2.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors"
+              className="w-full bg-bg-dark border border-border rounded-xl pl-10 pr-10 py-2.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors"
             />
             <button type="button" onClick={() => setShowPw(v => !v)} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-zinc-400 cursor-pointer">
               {showPw ? <EyeOff size={14} /> : <Eye size={14} />}
@@ -93,7 +93,7 @@ function ResetForm() {
               value={confirm}
               onChange={e => setConfirm(e.target.value)}
               placeholder="Repeat your new password"
-              className="w-full bg-[#0d0d0d] border border-[#222] rounded-xl pl-10 pr-4 py-2.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors"
+              className="w-full bg-bg-dark border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors"
             />
           </div>
         </div>
@@ -103,9 +103,9 @@ function ResetForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full flex items-center justify-center gap-2 bg-primary-gold hover:bg-[#5254d4] disabled:opacity-50 text-black font-bold py-2.5 rounded-xl transition-all text-sm cursor-pointer"
+          className="w-full flex items-center justify-center gap-2 bg-primary-gold hover:bg-gold-hover disabled:opacity-50 text-black font-bold py-2.5 rounded-xl transition-all text-sm cursor-pointer"
         >
-          {loading ? <><Loader2 size={14} className="animate-spin" /> Updating…</> : "Update password"}
+          {loading ? <><Loader2 size={14} className="animate-spin" /> Updatingâ€¦</> : "Update password"}
         </button>
       </form>
     </>
@@ -119,7 +119,7 @@ export default function ResetPasswordPage() {
       <div className="fixed inset-0 pointer-events-none"><div className="bg-noise w-full h-full" /></div>
 
       <div className="relative w-full max-w-sm">
-        <div className="bg-[#111] border border-[#1e1e1e] rounded-2xl p-8 shadow-2xl relative overflow-hidden">
+        <div className="bg-surface border border-border rounded-2xl p-8 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-primary-gold/40 to-transparent" />
           <Suspense fallback={<div className="flex justify-center py-8"><Loader2 size={20} className="text-zinc-700 animate-spin" /></div>}>
             <ResetForm />

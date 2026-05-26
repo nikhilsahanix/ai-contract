@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import api from "@/lib/api";
@@ -46,7 +46,7 @@ function InviteModal({ onClose }: { onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-md bg-[#111] border border-[#222] rounded-2xl shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-md bg-surface border border-border rounded-2xl shadow-2xl overflow-hidden">
         <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-primary-gold/60 to-transparent" />
         <div className="flex items-center justify-between px-6 py-4 border-b border-border">
           <div className="flex items-center gap-3">
@@ -81,7 +81,7 @@ function InviteModal({ onClose }: { onClose: () => void }) {
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   placeholder="colleague@lawfirm.com"
-                  className="w-full bg-[#0d0d0d] border border-[#222] rounded-xl px-4 py-2.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors"
+                  className="w-full bg-bg-dark border border-border rounded-xl px-4 py-2.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors"
                 />
               </div>
               <div>
@@ -93,7 +93,7 @@ function InviteModal({ onClose }: { onClose: () => void }) {
                       <button
                         key={r}
                         onClick={() => setRole(r)}
-                        className={`flex items-center gap-2.5 p-3 rounded-xl border text-left transition-all cursor-pointer ${role === r ? "border-primary-gold/30 bg-primary-gold/5" : "border-[#222] hover:border-[#333]"}`}
+                        className={`flex items-center gap-2.5 p-3 rounded-xl border text-left transition-all cursor-pointer ${role === r ? "border-primary-gold/30 bg-primary-gold/5" : "border-border hover:border-border-mid"}`}
                       >
                         <meta.icon size={13} className={role === r ? "text-primary-gold" : "text-zinc-600"} />
                         <div>
@@ -117,7 +117,7 @@ function InviteModal({ onClose }: { onClose: () => void }) {
                 <button
                   onClick={submit}
                   disabled={loading}
-                  className="flex items-center gap-2 bg-primary-gold hover:bg-[#5254d4] disabled:opacity-50 text-black font-bold px-4 py-2 rounded-xl transition-all text-sm cursor-pointer"
+                  className="flex items-center gap-2 bg-primary-gold hover:bg-gold-hover disabled:opacity-50 text-black font-bold px-4 py-2 rounded-xl transition-all text-sm cursor-pointer"
                 >
                   {loading ? <Loader2 size={14} className="animate-spin" /> : <Mail size={14} />}
                   Send invite
@@ -151,12 +151,12 @@ export default function TeamPage() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-white tracking-tight">Team</h1>
-          <p className="text-xs text-zinc-500 mt-0.5">{user?.org?.name ?? "Your workspace"} · {members.length || "—"} member{members.length !== 1 ? "s" : ""}</p>
+          <p className="text-xs text-zinc-500 mt-0.5">{user?.org?.name ?? "Your workspace"} Â· {members.length || "â€”"} member{members.length !== 1 ? "s" : ""}</p>
         </div>
         {isAdmin && (
           <button
             onClick={() => setShowInvite(true)}
-            className="flex items-center gap-2 bg-primary-gold hover:bg-[#5254d4] text-black px-4 py-2.5 rounded-xl font-bold transition-all text-sm cursor-pointer"
+            className="flex items-center gap-2 bg-primary-gold hover:bg-gold-hover text-black px-4 py-2.5 rounded-xl font-bold transition-all text-sm cursor-pointer"
           >
             <UserPlus size={14} /> Invite Member
           </button>
@@ -166,7 +166,7 @@ export default function TeamPage() {
       {loading ? (
         <div className="flex justify-center items-center h-40"><Loader2 size={20} className="text-zinc-700 animate-spin" /></div>
       ) : members.length === 0 ? (
-        <div className="border-2 border-dashed border-[#222] rounded-2xl p-12 text-center">
+        <div className="border-2 border-dashed border-border rounded-2xl p-12 text-center">
           <Users size={28} className="text-zinc-700 mx-auto mb-4" />
           <h3 className="text-sm font-semibold text-white mb-1">Just you so far</h3>
           <p className="text-xs text-zinc-600 mb-4">Invite colleagues to collaborate on contract reviews</p>
@@ -185,7 +185,7 @@ export default function TeamPage() {
             const meta = ROLE_META[member.role] ?? ROLE_META.VIEWER;
             const isSelf = member.id === user?.id;
             return (
-              <div key={member.id} className="flex items-center gap-4 bg-[#111] border border-[#1e1e1e] rounded-xl p-4">
+              <div key={member.id} className="flex items-center gap-4 bg-surface border border-border rounded-xl p-4">
                 <div className="w-9 h-9 rounded-full bg-primary-gold/10 border border-primary-gold/20 flex items-center justify-center text-primary-gold text-sm font-bold shrink-0">
                   {member.email[0].toUpperCase()}
                 </div>

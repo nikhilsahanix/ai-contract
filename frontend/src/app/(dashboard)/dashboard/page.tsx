@@ -89,7 +89,7 @@ function UploadModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-lg bg-[#111] border border-[#222] rounded-2xl shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-lg bg-surface border border-border rounded-2xl shadow-2xl overflow-hidden">
         <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-primary-gold/60 to-transparent" />
         <div className="flex items-center justify-between px-6 py-4 border-b border-border">
           <div className="flex items-center gap-3">
@@ -110,7 +110,7 @@ function UploadModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
             onDrop={e => { e.preventDefault(); const f = e.dataTransfer.files?.[0]; if (f) validateAndSet(f); }}
             onClick={() => !file && document.getElementById("file-input")?.click()}
             className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-all cursor-pointer
-              ${file ? "border-primary-gold/40 bg-primary-gold/5" : "border-[#333] hover:border-[#444] hover:bg-white/1"}`}
+              ${file ? "border-primary-gold/40 bg-primary-gold/5" : "border-border-mid hover:border-border-mid/70 hover:bg-white/1"}`}
           >
             <input id="file-input" type="file" accept=".pdf,.docx" className="hidden"
               onChange={e => { const f = e.target.files?.[0]; if (f) validateAndSet(f); }} />
@@ -137,7 +137,7 @@ function UploadModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
             <div>
               <label className="block text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Contract Type</label>
               <select value={contractType} onChange={e => setContractType(e.target.value)}
-                className="w-full bg-[#0d0d0d] border border-[#222] rounded-lg px-3 py-2 text-sm text-zinc-300 focus:outline-none focus:border-primary-gold/40 transition-colors">
+                className="w-full bg-bg-dark border border-border rounded-lg px-3 py-2 text-sm text-zinc-300 focus:outline-none focus:border-primary-gold/40 transition-colors">
                 {CONTRACT_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
               </select>
             </div>
@@ -147,7 +147,7 @@ function UploadModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
               </label>
               <input value={jurisdiction} onChange={e => setJurisdiction(e.target.value)}
                 placeholder="e.g. US-CA, UK, EU"
-                className="w-full bg-[#0d0d0d] border border-[#222] rounded-lg px-3 py-2 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors" />
+                className="w-full bg-bg-dark border border-border rounded-lg px-3 py-2 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors" />
             </div>
           </div>
           {uploading && (
@@ -166,7 +166,7 @@ function UploadModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
             </div>
           )}
           <button onClick={upload} disabled={!file || uploading}
-            className="w-full bg-primary-gold hover:bg-[#5254d4] disabled:opacity-40 disabled:cursor-not-allowed text-black font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-sm cursor-pointer">
+            className="w-full bg-primary-gold hover:bg-gold-hover disabled:opacity-40 disabled:cursor-not-allowed text-black font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-sm cursor-pointer">
             {uploading ? <><Loader2 size={14} className="animate-spin" /> Uploading…</> : <><Zap size={14} /> Analyze Contract</>}
           </button>
         </div>
@@ -184,7 +184,7 @@ function ContractRow({ contract, onClick }: { contract: Contract; onClick: () =>
 
   return (
     <div onClick={onClick}
-      className="group flex items-center gap-4 bg-[#111] border border-[#1e1e1e] hover:border-[#2a2a2a] rounded-xl p-4 transition-all duration-200 cursor-pointer hover:-translate-y-px">
+      className="group flex items-center gap-4 bg-surface border border-border hover:border-border-mid rounded-xl p-4 transition-all duration-200 cursor-pointer hover:-translate-y-px">
       <div className="w-10 h-10 rounded-xl bg-primary-gold/8 border border-primary-gold/15 flex items-center justify-center shrink-0">
         <FileText size={15} className="text-primary-gold" />
       </div>
@@ -320,7 +320,7 @@ export default function DashboardPage() {
         </div>
         <button
           onClick={() => setShowUpload(true)}
-          className="flex items-center gap-2 bg-primary-gold hover:bg-[#5254d4] text-black px-4 py-2.5 rounded-xl font-bold transition-all text-sm shadow-lg shadow-primary-gold/15 cursor-pointer"
+          className="flex items-center gap-2 bg-primary-gold hover:bg-gold-hover text-black px-4 py-2.5 rounded-xl font-bold transition-all text-sm shadow-lg shadow-primary-gold/15 cursor-pointer"
         >
           <FileUp size={14} /> Upload Contract
         </button>
@@ -408,9 +408,9 @@ export default function DashboardPage() {
 
       ) : contracts.length === 0 ? (
         <div onClick={() => setShowUpload(true)}
-          className="relative border-2 border-dashed border-[#222] hover:border-primary-gold/30 rounded-2xl p-16 text-center transition-all cursor-pointer group">
+          className="relative border-2 border-dashed border-border hover:border-primary-gold/30 rounded-2xl p-16 text-center transition-all cursor-pointer group">
           <div className="flex flex-col items-center max-w-sm mx-auto">
-            <div className="w-16 h-16 rounded-2xl border border-[#222] bg-[#111] group-hover:border-primary-gold/20 flex items-center justify-center mb-6 transition-all">
+            <div className="w-16 h-16 rounded-2xl border border-border bg-surface group-hover:border-primary-gold/20 flex items-center justify-center mb-6 transition-all">
               <FileText size={24} className="text-zinc-600 group-hover:text-zinc-500 transition-colors" />
             </div>
             <h3 className="text-xl font-bold text-white mb-2">No contracts yet</h3>
@@ -462,7 +462,7 @@ export default function DashboardPage() {
           {contracts.length > 5 && (
             <button
               onClick={() => router.push("/contracts")}
-              className="w-full flex items-center justify-center gap-2 border border-[#222] hover:border-primary-gold/20 text-zinc-500 hover:text-zinc-300 text-xs font-medium py-3 rounded-xl transition-all cursor-pointer"
+              className="w-full flex items-center justify-center gap-2 border border-border hover:border-primary-gold/20 text-zinc-500 hover:text-zinc-300 text-xs font-medium py-3 rounded-xl transition-all cursor-pointer"
             >
               View all {contracts.length} contracts <ChevronRight size={12} />
             </button>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import api from "@/lib/api";
@@ -58,7 +58,7 @@ export default function AuditLogPage() {
         <button
           onClick={fetchLogs}
           disabled={loading}
-          className="flex items-center gap-2 text-zinc-400 hover:text-white border border-[#222] hover:border-[#333] px-3 py-2 rounded-xl text-xs font-medium transition-all cursor-pointer disabled:opacity-50"
+          className="flex items-center gap-2 text-zinc-400 hover:text-white border border-border hover:border-border-mid px-3 py-2 rounded-xl text-xs font-medium transition-all cursor-pointer disabled:opacity-50"
         >
           <RefreshCw size={12} className={loading ? "animate-spin" : ""} /> Refresh
         </button>
@@ -70,8 +70,8 @@ export default function AuditLogPage() {
         <input
           value={query}
           onChange={e => setQuery(e.target.value)}
-          placeholder="Filter by action, IP address…"
-          className="w-full bg-[#0d0d0d] border border-[#222] rounded-xl pl-10 pr-4 py-2.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors"
+          placeholder="Filter by action, IP addressâ€¦"
+          className="w-full bg-bg-dark border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors"
         />
       </div>
 
@@ -83,15 +83,15 @@ export default function AuditLogPage() {
           <p className="text-sm text-zinc-500">{query ? "No matching events." : "No audit events recorded yet."}</p>
         </div>
       ) : (
-        <div className="bg-[#111] border border-[#1e1e1e] rounded-2xl overflow-hidden">
+        <div className="bg-surface border border-border rounded-2xl overflow-hidden">
           {/* Table header */}
-          <div className="grid grid-cols-12 gap-4 px-5 py-3 border-b border-[#1e1e1e] bg-[#0d0d0d]">
+          <div className="grid grid-cols-12 gap-4 px-5 py-3 border-b border-border bg-bg-dark">
             <span className="col-span-4 text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Event</span>
             <span className="col-span-3 text-[10px] font-bold text-zinc-600 uppercase tracking-widest">User</span>
             <span className="col-span-2 text-[10px] font-bold text-zinc-600 uppercase tracking-widest">IP</span>
             <span className="col-span-3 text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Time</span>
           </div>
-          <div className="divide-y divide-[#1a1a1a]">
+          <div className="divide-y divide-border">
             {filtered.map(log => {
               const meta = ACTION_META[log.action] ?? { label: log.action, icon: History, color: "text-zinc-400" };
               const Icon = meta.icon;
@@ -102,10 +102,10 @@ export default function AuditLogPage() {
                     <span className="text-xs font-medium text-zinc-300">{meta.label}</span>
                   </div>
                   <div className="col-span-3 text-xs text-zinc-500 font-mono truncate self-center">
-                    {log.userId ? log.userId.slice(0, 8) + "…" : "—"}
+                    {log.userId ? log.userId.slice(0, 8) + "â€¦" : "â€”"}
                   </div>
                   <div className="col-span-2 text-xs text-zinc-600 font-mono self-center">
-                    {log.ipAddress ?? "—"}
+                    {log.ipAddress ?? "â€”"}
                   </div>
                   <div className="col-span-3 text-[11px] text-zinc-600 self-center">
                     {new Date(log.createdAt).toLocaleString("en-US", {

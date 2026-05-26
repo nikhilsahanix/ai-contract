@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
@@ -27,7 +27,7 @@ const RISK_CONFIG: Record<string, { color: string; bg: string; border: string; l
 
 const STATUS_ICON: Record<string, { icon: typeof CheckCircle2; color: string; label: string }> = {
   COMPLETED:  { icon: CheckCircle2, color: "text-green-400",    label: "Completed"  },
-  PROCESSING: { icon: Loader2,      color: "text-primary-gold", label: "Analyzing…" },
+  PROCESSING: { icon: Loader2,      color: "text-primary-gold", label: "Analyzingâ€¦" },
   PENDING:    { icon: Clock,        color: "text-zinc-500",     label: "Queued"     },
   FAILED:     { icon: AlertCircle,  color: "text-red-400",      label: "Failed"     },
 };
@@ -70,8 +70,8 @@ export default function ContractsListPage() {
           <input
             value={search}
             onChange={e => setSearch(e.target.value)}
-            placeholder="Search contracts…"
-            className="w-full bg-[#111] border border-[#1e1e1e] rounded-xl pl-9 pr-4 py-2.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors"
+            placeholder="Search contractsâ€¦"
+            className="w-full bg-surface border border-border rounded-xl pl-9 pr-4 py-2.5 text-sm text-zinc-300 placeholder-zinc-700 focus:outline-none focus:border-primary-gold/40 transition-colors"
           />
         </div>
         <div className="relative">
@@ -79,7 +79,7 @@ export default function ContractsListPage() {
           <select
             value={statusFilter}
             onChange={e => setStatusFilter(e.target.value)}
-            className="bg-[#111] border border-[#1e1e1e] rounded-xl pl-9 pr-8 py-2.5 text-sm text-zinc-300 focus:outline-none focus:border-primary-gold/40 transition-colors appearance-none cursor-pointer"
+            className="bg-surface border border-border rounded-xl pl-9 pr-8 py-2.5 text-sm text-zinc-300 focus:outline-none focus:border-primary-gold/40 transition-colors appearance-none cursor-pointer"
           >
             <option value="ALL">All Status</option>
             <option value="COMPLETED">Completed</option>
@@ -101,13 +101,13 @@ export default function ContractsListPage() {
             const Icon = st.icon;
             const risk = c.analyses?.[0]?.riskLevel ? RISK_CONFIG[c.analyses[0].riskLevel] : null;
             return (
-              <div key={c.id} onClick={() => router.push(`/contracts/${c.id}`)} className="group flex items-center gap-4 bg-[#111] border border-[#1e1e1e] hover:border-[#2a2a2a] rounded-xl p-4 transition-all cursor-pointer hover:-translate-y-px">
+              <div key={c.id} onClick={() => router.push(`/contracts/${c.id}`)} className="group flex items-center gap-4 bg-surface border border-border hover:border-border rounded-xl p-4 transition-all cursor-pointer hover:-translate-y-px">
                 <div className="w-10 h-10 rounded-xl bg-primary-gold/8 border border-primary-gold/15 flex items-center justify-center shrink-0"><FileText size={15} className="text-primary-gold" /></div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-white truncate">{c.originalName}</p>
                   <div className="flex items-center gap-2 mt-0.5">
                     <span className="text-[10px] text-zinc-600">{c.contractType?.replace(/_/g, " ")}</span>
-                    <span className="text-zinc-800">·</span>
+                    <span className="text-zinc-800">Â·</span>
                     <span className="text-[10px] text-zinc-600">{new Date(c.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
                   </div>
                 </div>

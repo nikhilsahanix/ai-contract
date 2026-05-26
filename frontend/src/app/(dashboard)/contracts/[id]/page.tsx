@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
@@ -65,7 +65,7 @@ function FlagCard({ flag }: { flag: FlagItem }) {
       {open && (
         <div className="px-4 pb-4 space-y-3 border-t border-border">
           <div className="pt-3"><p className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest mb-1">Issue</p><p className="text-sm text-zinc-300 leading-relaxed">{flag.issue}</p></div>
-          <div className="bg-[#0d0d0d] border border-border rounded-lg p-3"><p className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest mb-1">Market Standard</p><p className="text-xs text-zinc-400 leading-relaxed">{flag.marketStandard}</p></div>
+          <div className="bg-bg-dark border border-border rounded-lg p-3"><p className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest mb-1">Market Standard</p><p className="text-xs text-zinc-400 leading-relaxed">{flag.marketStandard}</p></div>
           <div><p className="text-[10px] font-bold text-primary-gold uppercase tracking-widest mb-1">Recommendation</p><p className="text-sm text-zinc-300 leading-relaxed">{flag.recommendation}</p></div>
           {flag.suggestedText && (<div className="bg-primary-gold/5 border border-primary-gold/15 rounded-lg p-3"><p className="text-[10px] font-bold text-primary-gold uppercase tracking-widest mb-2">Suggested Language</p><p className="text-xs text-zinc-300 font-mono leading-relaxed whitespace-pre-wrap">{flag.suggestedText}</p></div>)}
           <div className="flex items-center gap-1.5"><p className="text-[10px] text-zinc-700">Affects:</p><span className="text-[10px] font-semibold text-zinc-500">{flag.affectedParty}</span></div>
@@ -79,13 +79,13 @@ function MissingClauseCard({ clause }: { clause: MissingClause }) {
   const [open, setOpen] = useState(clause.importance === "CRITICAL");
   const isCritical = clause.importance === "CRITICAL";
   return (
-    <div className={`border rounded-xl overflow-hidden ${isCritical ? "border-red-400/20" : "border-[#222]"}`}>
+    <div className={`border rounded-xl overflow-hidden ${isCritical ? "border-red-400/20" : "border-border"}`}>
       <button onClick={() => setOpen(x => !x)} className="w-full flex items-center gap-3 p-4 text-left hover:bg-white/1 transition-colors">
         <XCircle size={14} className={isCritical ? "text-red-400 shrink-0" : "text-zinc-600 shrink-0"} />
         <div className="flex-1"><div className="flex items-center gap-2"><p className="text-sm font-semibold text-white">{clause.clauseType}</p><span className={`text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded border ${isCritical ? "text-red-400 bg-red-400/10 border-red-400/25" : "text-zinc-500 bg-zinc-500/10 border-zinc-500/20"}`}>{clause.importance}</span></div></div>
         {open ? <ChevronUp size={14} className="text-zinc-600" /> : <ChevronDown size={14} className="text-zinc-600" />}
       </button>
-      {open && (<div className="px-4 pb-4 space-y-3 border-t border-border"><div className="pt-3"><p className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest mb-1">Why It Matters</p><p className="text-sm text-zinc-300 leading-relaxed">{clause.whyItMatters}</p></div>{clause.suggestedText && (<div className="bg-[#0d0d0d] border border-border rounded-lg p-3"><p className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest mb-2">Suggested Clause</p><p className="text-xs text-zinc-400 font-mono leading-relaxed whitespace-pre-wrap">{clause.suggestedText}</p></div>)}</div>)}
+      {open && (<div className="px-4 pb-4 space-y-3 border-t border-border"><div className="pt-3"><p className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest mb-1">Why It Matters</p><p className="text-sm text-zinc-300 leading-relaxed">{clause.whyItMatters}</p></div>{clause.suggestedText && (<div className="bg-bg-dark border border-border rounded-lg p-3"><p className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest mb-2">Suggested Clause</p><p className="text-xs text-zinc-400 font-mono leading-relaxed whitespace-pre-wrap">{clause.suggestedText}</p></div>)}</div>)}
     </div>
   );
 }
@@ -105,7 +105,7 @@ function ProcessingState({ contractName }: { contractName: string }) {
       <div className="flex flex-col gap-2 w-64">
         {steps.map((s, i) => (
           <div key={s} className="flex items-center gap-3">
-            <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 transition-all ${i < step ? "bg-primary-gold border-primary-gold" : i === step ? "border-primary-gold animate-pulse" : "border-[#333]"}`}>{i < step && <CheckCircle2 size={10} className="text-black" />}</div>
+            <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 transition-all ${i < step ? "bg-primary-gold border-primary-gold" : i === step ? "border-primary-gold animate-pulse" : "border-border-mid"}`}>{i < step && <CheckCircle2 size={10} className="text-black" />}</div>
             <span className={`text-xs transition-colors ${i === step ? "text-white" : i < step ? "text-zinc-500" : "text-zinc-700"}`}>{s}</span>
           </div>
         ))}
@@ -201,7 +201,7 @@ export default function ContractDetailPage() {
             <p className="text-zinc-500 text-sm mt-2 max-w-sm">{analysis.errorMessage ?? "The analysis could not be completed. Please try uploading again."}</p>
             {analysis.retryCount > 0 && <p className="text-zinc-700 text-xs mt-2">{analysis.retryCount} retries attempted</p>}
           </div>
-          <button onClick={() => router.push("/dashboard")} className="text-sm text-primary-gold hover:text-[#a68626] underline transition-colors">
+          <button onClick={() => router.push("/dashboard")} className="text-sm text-primary-gold hover:text-gold-dim underline transition-colors">
             Upload a new contract
           </button>
         </div>
@@ -225,20 +225,20 @@ export default function ContractDetailPage() {
       <TopNav />
 
       {/* Header card */}
-      <div className="bg-[#111] border border-[#1e1e1e] rounded-2xl p-6">
+      <div className="bg-surface border border-border rounded-2xl p-6">
         <div className="flex flex-col lg:flex-row lg:items-start gap-6">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-8 h-8 rounded-lg bg-primary-gold/10 border border-primary-gold/20 flex items-center justify-center shrink-0"><FileText size={13} className="text-primary-gold" /></div>
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-[10px] text-zinc-600 bg-border border border-[#222] px-2 py-0.5 rounded">{contract?.type?.replace(/_/g, " ")}</span>
-                {contract?.jurisdiction && <span className="text-[10px] text-zinc-600 bg-border border border-[#222] px-2 py-0.5 rounded">{contract.jurisdiction}</span>}
+                <span className="text-[10px] text-zinc-600 bg-border border border-border px-2 py-0.5 rounded">{contract?.type?.replace(/_/g, " ")}</span>
+                {contract?.jurisdiction && <span className="text-[10px] text-zinc-600 bg-border border border-border px-2 py-0.5 rounded">{contract.jurisdiction}</span>}
                 {contract?.pageCount && <span className="text-[10px] text-zinc-600">{contract.pageCount} pages</span>}
               </div>
             </div>
             <h1 className="text-xl font-bold text-white mb-3 truncate">{contract?.name}</h1>
             {analysis.executiveTakeaway && (
-              <div className="bg-[#0d0d0d] border border-border rounded-xl p-4 mb-4">
+              <div className="bg-bg-dark border border-border rounded-xl p-4 mb-4">
                 <p className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest mb-1.5">Executive Summary</p>
                 <p className="text-sm text-zinc-300 leading-relaxed">{analysis.executiveSummary}</p>
                 <div className="mt-3 pt-3 border-t border-border"><p className="text-xs text-zinc-500 italic">&ldquo;{analysis.executiveTakeaway}&rdquo;</p></div>
@@ -256,8 +256,8 @@ export default function ContractDetailPage() {
               <div className="text-center"><p className="text-2xl font-black text-zinc-400">{analysis.flags.length}</p><p className="text-[9px] text-zinc-700 uppercase tracking-widest">Total</p></div>
             </div>
             {analysis.hasRedline && (
-              <button onClick={downloadRedline} disabled={downloading} className="flex items-center gap-2 bg-primary-gold hover:bg-[#a68626] text-black font-bold px-4 py-2 rounded-lg text-xs transition-all disabled:opacity-50">
-                {downloading ? <><Loader2 size={12} className="animate-spin" /> Generating…</> : <><Download size={12} /> Download Redline</>}
+              <button onClick={downloadRedline} disabled={downloading} className="flex items-center gap-2 bg-primary-gold hover:bg-gold-hover text-black font-bold px-4 py-2 rounded-lg text-xs transition-all disabled:opacity-50">
+                {downloading ? <><Loader2 size={12} className="animate-spin" /> Generatingâ€¦</> : <><Download size={12} /> Download Redline</>}
               </button>
             )}
           </div>
@@ -269,7 +269,7 @@ export default function ContractDetailPage() {
 
       {/* Negotiation priorities */}
       {analysis.negotiationPriority.length > 0 && (
-        <div className="bg-[#111] border border-primary-gold/15 rounded-2xl p-6">
+        <div className="bg-surface border border-primary-gold/15 rounded-2xl p-6">
           <div className="flex items-center gap-2 mb-4"><TrendingUp size={14} className="text-primary-gold" /><h2 className="text-sm font-bold text-white">Top Negotiation Priorities</h2></div>
           <div className="space-y-2">{analysis.negotiationPriority.map((item, i) => (<div key={i} className="flex items-start gap-3"><span className="text-primary-gold font-black text-sm shrink-0 w-4">{i + 1}.</span><p className="text-sm text-zinc-300">{item}</p></div>))}</div>
         </div>
@@ -285,21 +285,21 @@ export default function ContractDetailPage() {
 
       {/* Tabs */}
       <div>
-        <div className="flex gap-1 bg-[#0d0d0d] border border-border rounded-xl p-1 mb-4 overflow-x-auto">
+        <div className="flex gap-1 bg-bg-dark border border-border rounded-xl p-1 mb-4 overflow-x-auto">
           {TABS.map(tab => { const Icon = tab.icon; return (
-            <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all flex-1 justify-center ${activeTab === tab.id ? "bg-border text-white border border-[#2a2a2a]" : "text-zinc-600 hover:text-zinc-400"}`}>
+            <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all flex-1 justify-center ${activeTab === tab.id ? "bg-border text-white border border-border" : "text-zinc-600 hover:text-zinc-400"}`}>
               <Icon size={11} />{tab.label}{tab.count > 0 && <span className={`text-[9px] font-black px-1.5 py-0.5 rounded-full ${activeTab === tab.id ? "bg-primary-gold/20 text-primary-gold" : "bg-border text-zinc-600"}`}>{tab.count}</span>}
             </button>
           ); })}
         </div>
         <div className="space-y-3">
-          {activeTab === "flags" && (sortedFlags.length === 0 ? <p className="text-center text-zinc-600 text-sm py-8">No issues flagged — contract looks clean.</p> : sortedFlags.map(flag => <FlagCard key={flag.id} flag={flag} />))}
+          {activeTab === "flags" && (sortedFlags.length === 0 ? <p className="text-center text-zinc-600 text-sm py-8">No issues flagged â€” contract looks clean.</p> : sortedFlags.map(flag => <FlagCard key={flag.id} flag={flag} />))}
           {activeTab === "missing" && (analysis.missingClauses.length === 0 ? <p className="text-center text-zinc-600 text-sm py-8">No missing clauses detected.</p> : analysis.missingClauses.map((c, i) => <MissingClauseCard key={i} clause={c} />))}
           {activeTab === "positives" && (analysis.positives.length === 0 ? <p className="text-center text-zinc-600 text-sm py-8">No positive provisions noted.</p> : analysis.positives.map((p, i) => (
             <div key={i} className="border border-green-400/15 rounded-xl p-4 bg-green-400/5"><div className="flex items-start gap-3"><CheckCircle2 size={14} className="text-green-400 shrink-0 mt-0.5" /><div><div className="flex items-center gap-2 mb-1"><p className="text-sm font-semibold text-white">{p.title}</p><span className="text-[10px] text-zinc-600 font-mono">{p.clauseRef}</span></div><p className="text-xs text-zinc-400 leading-relaxed">{p.why}</p></div></div></div>
           )))}
           {activeTab === "priority" && (
-            <div className="bg-[#111] border border-[#1e1e1e] rounded-xl p-6 space-y-4"><p className="text-xs text-zinc-600">Ordered by importance — start negotiations here.</p>{analysis.negotiationPriority.map((item, i) => (<div key={i} className="flex items-start gap-4 pb-4 border-b border-border last:border-0 last:pb-0"><div className="w-8 h-8 rounded-full bg-primary-gold/10 border border-primary-gold/20 flex items-center justify-center shrink-0 text-primary-gold font-black text-sm">{i + 1}</div><p className="text-sm text-zinc-300 leading-relaxed pt-1">{item}</p></div>))}</div>
+            <div className="bg-surface border border-border rounded-xl p-6 space-y-4"><p className="text-xs text-zinc-600">Ordered by importance â€” start negotiations here.</p>{analysis.negotiationPriority.map((item, i) => (<div key={i} className="flex items-start gap-4 pb-4 border-b border-border last:border-0 last:pb-0"><div className="w-8 h-8 rounded-full bg-primary-gold/10 border border-primary-gold/20 flex items-center justify-center shrink-0 text-primary-gold font-black text-sm">{i + 1}</div><p className="text-sm text-zinc-300 leading-relaxed pt-1">{item}</p></div>))}</div>
           )}
         </div>
       </div>
@@ -308,7 +308,7 @@ export default function ContractDetailPage() {
       <div className="flex items-center justify-between text-[10px] text-zinc-700 pt-4 border-t border-border">
         <span>Analyzed by {analysis.model ?? "Claude"}</span>
         {analysis.processingMs && <span>Processing time: {(analysis.processingMs / 1000).toFixed(1)}s</span>}
-        {analysis.extractionMeta && <span>Extraction: {analysis.extractionMeta.method} · {Math.round(analysis.extractionMeta.confidence * 100)}% confidence</span>}
+        {analysis.extractionMeta && <span>Extraction: {analysis.extractionMeta.method} Â· {Math.round(analysis.extractionMeta.confidence * 100)}% confidence</span>}
       </div>
     </div>
   );
